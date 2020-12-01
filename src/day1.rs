@@ -11,10 +11,10 @@ pub fn part1(input: &[i32]) -> i32 {
         .into_iter()
         .permutations(2)
         // map from vector of 2 elements to a tuple2
-        .map(|vec| (**vec.get(0).unwrap(), **vec.get(1).unwrap()))
+        .map(|vec: Vec<&i32>| (**vec.get(0).unwrap(), **vec.get(1).unwrap()))
         // takes one element matching predicate, returns option
-        .find(|(left, right)| left + right == 2020)
-        .map(|(left, right)| left * right)
+        .find(|(left, right): (&i32, &i32)| left + right == 2020)
+        .map(|(left, right): (i32, i32)| left * right)
         // unwrap option
         .expect("should be a number here")
 }
