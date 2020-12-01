@@ -10,8 +10,12 @@ pub fn part1(input: &[i32]) -> i32 {
     input
         .into_iter()
         .permutations(2)
-        .find(|pair| *pair.get(0).unwrap() + *pair.get(1).unwrap() == 2020)
-        .map(|pair| *pair.get(0).unwrap() * *pair.get(1).unwrap())
+        // map from vector of 2 elements to a tuple2
+        .map(|vec| (**vec.get(0).unwrap(), **vec.get(1).unwrap()))
+        // takes one element matching predicate, returns option
+        .find(|(left, right)| left + right == 2020)
+        .map(|(left, right)| left * right)
+        // unwrap option
         .expect("should be a number here")
 }
 
@@ -20,8 +24,16 @@ pub fn part2(input: &[i32]) -> i32 {
     input
         .into_iter()
         .permutations(3)
-        .find(|pair| *pair.get(0).unwrap() + *pair.get(1).unwrap() + *pair.get(2).unwrap() == 2020)
-        .map(|pair| *pair.get(0).unwrap() * *pair.get(1).unwrap() * *pair.get(2).unwrap())
+        // map from vector of 3 elements to a tuple3
+        .map(|vec| {
+            (
+                **vec.get(0).unwrap(),
+                **vec.get(1).unwrap(),
+                **vec.get(2).unwrap(),
+            )
+        })
+        .find(|(left, middle, right)| left + middle + right == 2020)
+        .map(|(left, middle, right)| left * middle * right)
         .expect("should be a number here")
 }
 
