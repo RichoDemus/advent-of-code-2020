@@ -1,4 +1,6 @@
 use itertools::Itertools;
+use std::collections::HashSet;
+use std::iter::FromIterator;
 
 #[aoc_generator(day1)]
 pub fn lines_of_ints_to_int_array(input: &str) -> Vec<i32> {
@@ -13,10 +15,22 @@ pub fn part1(input: &[i32]) -> i32 {
         // map from vector of 2 elements to a tuple2
         .map(|vec: Vec<&i32>| (**vec.get(0).unwrap(), **vec.get(1).unwrap()))
         // takes one element matching predicate, returns option
-        .find(|(left, right): (&i32, &i32)| left + right == 2020)
+        .find(|(left, right): &(i32, i32)| left + right == 2020)
         .map(|(left, right): (i32, i32)| left * right)
         // unwrap option
         .expect("should be a number here")
+}
+
+#[aoc(day1, part1, Set)]
+pub fn part1_set(input: &[i32]) -> i32 {
+    let set = HashSet::<&i32>::from_iter(input);
+    for x in &set {
+        let right = 2020 - *x;
+        if set.contains(&right) {
+            return *x * right;
+        }
+    }
+    panic!("no solution")
 }
 
 #[aoc(day1, part2)]
