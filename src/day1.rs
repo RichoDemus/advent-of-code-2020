@@ -10,7 +10,7 @@ pub fn lines_of_ints_to_int_array(input: &str) -> Vec<i32> {
 #[aoc(day1, part1)]
 pub fn part1(input: &[i32]) -> i32 {
     input
-        .into_iter()
+        .iter()
         .permutations(2)
         // map from vector of 2 elements to a tuple2
         .map(|vec: Vec<&i32>| (**vec.get(0).unwrap(), **vec.get(1).unwrap()))
@@ -36,7 +36,7 @@ pub fn part1_set(input: &[i32]) -> i32 {
 #[aoc(day1, part2)]
 pub fn part2(input: &[i32]) -> i32 {
     input
-        .into_iter()
+        .iter()
         .permutations(3)
         // map from vector of 3 elements to a tuple3
         .map(|vec| {
@@ -52,4 +52,36 @@ pub fn part2(input: &[i32]) -> i32 {
 }
 
 #[cfg(test)]
-mod tests {}
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_part1() {
+        let input = include_str!("../input/2020/day1.txt");
+        let input = lines_of_ints_to_int_array(input);
+
+        let result = part1(input.as_slice());
+
+        assert_eq!(result, 485739);
+    }
+
+    #[test]
+    fn test_part1_set() {
+        let input = include_str!("../input/2020/day1.txt");
+        let input = lines_of_ints_to_int_array(input);
+
+        let result = part1_set(input.as_slice());
+
+        assert_eq!(result, 485739);
+    }
+
+    #[test]
+    fn test_part2() {
+        let input = include_str!("../input/2020/day1.txt");
+        let input = lines_of_ints_to_int_array(input);
+
+        let result = part2(input.as_slice());
+
+        assert_eq!(result, 161109702);
+    }
+}
