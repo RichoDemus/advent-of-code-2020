@@ -5,6 +5,33 @@ pub fn part1(input: &str) -> usize {
     input.lines().into_iter().filter(password_valid).count()
 }
 
+#[aoc(day2, part1, perf)]
+pub fn part1_perf(input: &str) -> usize {
+    let mut valid_passwords = 0;
+
+    for line in input.lines() {
+        let mut split = line.split(':');
+        let policy = split.next().unwrap();
+        let password = split.next().unwrap();
+
+        let mut ranges_and_char = policy.split(' ');
+        let ranges = ranges_and_char.next().unwrap();
+        let char = ranges_and_char.next().unwrap();
+
+        let mut ranges = ranges.split('-');
+
+        let lower_bounds: usize = ranges.next().unwrap().parse().unwrap();
+        let upper_bounds: usize = ranges.next().unwrap().parse().unwrap();
+
+        let characters = password.matches(char).count();
+        if characters <= upper_bounds && characters >= lower_bounds {
+            valid_passwords += 1;
+        }
+    }
+
+    valid_passwords
+}
+
 #[aoc(day2, part2)]
 pub fn part2(input: &str) -> usize {
     input
@@ -139,6 +166,15 @@ mod tests {
         let input = include_str!("../input/2020/day2.txt");
 
         let result = part1_regex_no_vec(input);
+
+        assert_eq!(result, 396);
+    }
+
+    #[test]
+    fn test_part1_perf() {
+        let input = include_str!("../input/2020/day2.txt");
+
+        let result = part1_perf(input);
 
         assert_eq!(result, 396);
     }
