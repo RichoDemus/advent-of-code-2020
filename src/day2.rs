@@ -80,6 +80,24 @@ pub fn part1_regex(input: &str) -> usize {
         .count()
 }
 
+#[aoc(day2, part1, regex_no_vec)]
+pub fn part1_regex_no_vec(input: &str) -> usize {
+    let re = Regex::new(r"(?m)^(\d+)-(\d+)\s(\w):\s(.*)$").unwrap();
+    let mut valid_passwords = 0;
+    for capture in re.captures_iter(input) {
+        let first_number: usize = capture.get(1).unwrap().as_str().parse().unwrap();
+        let second_number: usize = capture.get(2).unwrap().as_str().parse().unwrap();
+        let character: char = capture.get(3).unwrap().as_str().parse().unwrap();
+        let password: &str = capture.get(4).unwrap().as_str();
+
+        let characters = password.matches(character).count();
+        if characters <= second_number && characters >= first_number {
+            valid_passwords += 1;
+        }
+    }
+    valid_passwords
+}
+
 fn parse(input: &str) -> Vec<(usize, usize, char, &str)> {
     let re = Regex::new(r"(?m)^(\w+)-(\w+)\s(\w):\s(.*)$").unwrap();
 
@@ -112,6 +130,15 @@ mod tests {
         let input = include_str!("../input/2020/day2.txt");
 
         let result = part1_regex(input);
+
+        assert_eq!(result, 396);
+    }
+
+    #[test]
+    fn test_part1_regex_no_vec() {
+        let input = include_str!("../input/2020/day2.txt");
+
+        let result = part1_regex_no_vec(input);
 
         assert_eq!(result, 396);
     }
