@@ -14,9 +14,13 @@ pub fn part1(input: &[i32]) -> i32 {
         .permutations(2)
         // map from vector of 2 elements to a tuple2
         .map(|vec: Vec<&i32>| (**vec.get(0).unwrap(), **vec.get(1).unwrap()))
-        // takes one element matching predicate, returns option
-        .find(|(left, right): &(i32, i32)| left + right == 2020)
-        .map(|(left, right): (i32, i32)| left * right)
+        .find_map(|(left, right)| {
+            if left + right == 2020 {
+                Some(left * right)
+            } else {
+                None
+            }
+        })
         // unwrap option
         .expect("should be a number here")
 }
@@ -46,8 +50,15 @@ pub fn part2(input: &[i32]) -> i32 {
                 **vec.get(2).unwrap(),
             )
         })
-        .find(|(left, middle, right)| left + middle + right == 2020)
-        .map(|(left, middle, right)| left * middle * right)
+        .find_map(|(left, middle, right)| {
+            if left + middle + right == 2020 {
+                Some(left * middle * right)
+            } else {
+                None
+            }
+        })
+        // .find(|(left, middle, right)| left + middle + right == 2020)
+        // .map(|(left, middle, right)| left * middle * right)
         .expect("should be a number here")
 }
 
