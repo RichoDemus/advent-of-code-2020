@@ -1,3 +1,4 @@
+#![allow(clippy::must_use_candidate)]
 extern crate aoc_runner;
 
 #[macro_use]

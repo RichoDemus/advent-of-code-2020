@@ -8,3 +8,7 @@ cargo aoc input
 ```
 cargo aoc
 ```
+3. Super strict clippy
+```
+clippy -- -W clippy::nursery -W clippy::pedantic -W clippy::cargo
+```
