@@ -125,10 +125,13 @@ fn part1_perf_bytes_split(input: &[u8]) -> i32 {
         if line.is_empty() {
             continue;
         }
-        if line.get(column % line.len()).unwrap() == &35 {
+        if line.get(column).unwrap() == &35 {
             trees += 1;
         }
         column += right_step;
+        if column >= line.len() {
+            column -= line.len();
+        }
     }
     trees
 }
