@@ -1,5 +1,5 @@
 #[aoc_generator(day3, part1, map)]
-pub fn matrix_of_symbols_to_boolean_matrix(input: &str) -> Map {
+fn matrix_of_symbols_to_boolean_matrix(input: &str) -> Map {
     let asd = input
         .lines()
         .map(|line| line.chars().map(|char| char == '#').collect())
@@ -12,18 +12,18 @@ pub fn matrix_of_symbols_to_boolean_matrix(input: &str) -> Map {
 }
 
 #[aoc_generator(day3, part2, map)]
-pub fn matrix_of_symbols_to_boolean_matrix2(input: &str) -> Map {
+fn matrix_of_symbols_to_boolean_matrix2(input: &str) -> Map {
     matrix_of_symbols_to_boolean_matrix(input)
 }
 
 #[derive(Debug)]
-pub struct Map {
-    pub coordinates: Vec<Vec<bool>>,
+struct Map {
+    coordinates: Vec<Vec<bool>>,
     width: usize,
 }
 
 impl Map {
-    pub fn tree_at(&self, row: usize, mut column: usize) -> bool {
+    fn tree_at(&self, row: usize, mut column: usize) -> bool {
         while column >= self.width {
             column -= self.width;
         }
@@ -32,7 +32,7 @@ impl Map {
 }
 
 #[aoc(day3, part1, map)]
-pub fn part1(map: &Map) -> i32 {
+fn part1(map: &Map) -> i32 {
     let right_step = 3;
     let down_step = 1;
 
@@ -52,7 +52,7 @@ pub fn part1(map: &Map) -> i32 {
 }
 
 #[aoc(day3, part1, perf)]
-pub fn part1_perf(input: &str) -> i32 {
+fn part1_perf(input: &str) -> i32 {
     let right_step = 3;
 
     let mut column = 0;
@@ -68,7 +68,7 @@ pub fn part1_perf(input: &str) -> i32 {
 }
 
 #[aoc(day3, part1, perf_enumerate)]
-pub fn part1_perf_enumerate(input: &str) -> i32 {
+fn part1_perf_enumerate(input: &str) -> i32 {
     let right_step = 3;
     let mut trees = 0;
     for (i, line) in input.lines().enumerate() {
@@ -80,7 +80,7 @@ pub fn part1_perf_enumerate(input: &str) -> i32 {
 }
 
 #[aoc(day3, part1, perf_bytes)]
-pub fn part1_perf_bytes(input: &[u8]) -> i32 {
+fn part1_perf_bytes(input: &[u8]) -> i32 {
     let mut desired_column = 0;
     let mut current_column = 0;
     let mut width = 0;
@@ -116,7 +116,7 @@ pub fn part1_perf_bytes(input: &[u8]) -> i32 {
 }
 
 #[aoc(day3, part1, perf_bytes_split)]
-pub fn part1_perf_bytes_split(input: &[u8]) -> i32 {
+fn part1_perf_bytes_split(input: &[u8]) -> i32 {
     let right_step = 3;
 
     let mut column = 0;
@@ -134,7 +134,7 @@ pub fn part1_perf_bytes_split(input: &[u8]) -> i32 {
 }
 
 #[aoc(day3, part1, perf_bytes_modulus)]
-pub fn part1_perf_bytes_modulus(input: &[u8]) -> i32 {
+fn part1_perf_bytes_modulus(input: &[u8]) -> i32 {
     let mut desired_column = 0;
     let mut current_column = 0;
     let mut width = 1;
@@ -167,7 +167,7 @@ pub fn part1_perf_bytes_modulus(input: &[u8]) -> i32 {
 }
 
 #[aoc(day3, part2, map)]
-pub fn part2(map: &Map) -> usize {
+fn part2(map: &Map) -> usize {
     fn get_trees_for_slope(map: &Map, right_step: usize, down_step: usize) -> usize {
         let mut column = 0;
         let mut row = 0;

@@ -3,12 +3,12 @@ use std::collections::HashSet;
 use std::iter::FromIterator;
 
 #[aoc_generator(day1)]
-pub fn lines_of_ints_to_int_array(input: &str) -> Vec<i32> {
+fn lines_of_ints_to_int_array(input: &str) -> Vec<i32> {
     input.lines().map(|line| line.parse().unwrap()).collect()
 }
 
 #[aoc(day1, part1)]
-pub fn part1(input: &[i32]) -> i32 {
+fn part1(input: &[i32]) -> i32 {
     input
         .iter()
         .permutations(2)
@@ -26,7 +26,7 @@ pub fn part1(input: &[i32]) -> i32 {
 }
 
 #[aoc(day1, part1, Set)]
-pub fn part1_set(input: &[i32]) -> i32 {
+fn part1_set(input: &[i32]) -> i32 {
     let set = HashSet::<&i32>::from_iter(input);
     for x in &set {
         let right = 2020 - *x;
@@ -38,7 +38,7 @@ pub fn part1_set(input: &[i32]) -> i32 {
 }
 
 #[aoc(day1, part2)]
-pub fn part2(input: &[i32]) -> i32 {
+fn part2(input: &[i32]) -> i32 {
     input
         .iter()
         .permutations(3)

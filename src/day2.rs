@@ -1,12 +1,12 @@
 use regex::Regex;
 
 #[aoc(day2, part1)]
-pub fn part1(input: &str) -> usize {
+fn part1(input: &str) -> usize {
     input.lines().into_iter().filter(password_valid).count()
 }
 
 #[aoc(day2, part1, perf)]
-pub fn part1_perf(input: &str) -> usize {
+fn part1_perf(input: &str) -> usize {
     let mut valid_passwords = 0;
 
     for line in input.lines() {
@@ -33,7 +33,7 @@ pub fn part1_perf(input: &str) -> usize {
 }
 
 #[aoc(day2, part2)]
-pub fn part2(input: &str) -> usize {
+fn part2(input: &str) -> usize {
     input
         .lines()
         .into_iter()
@@ -97,7 +97,7 @@ fn password_valid_part2(input: &&str) -> bool {
 }
 
 #[aoc(day2, part1, regex)]
-pub fn part1_regex(input: &str) -> usize {
+fn part1_regex(input: &str) -> usize {
     parse(input)
         .into_iter()
         .filter(|(lower, higher, char, password)| {
@@ -108,7 +108,7 @@ pub fn part1_regex(input: &str) -> usize {
 }
 
 #[aoc(day2, part1, regex_no_vec)]
-pub fn part1_regex_no_vec(input: &str) -> usize {
+fn part1_regex_no_vec(input: &str) -> usize {
     let re = Regex::new(r"(?m)^(\d+)-(\d+)\s(\w):\s(.*)$").unwrap();
     let mut valid_passwords = 0;
     for capture in re.captures_iter(input) {
