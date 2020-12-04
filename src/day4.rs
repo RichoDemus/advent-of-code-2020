@@ -1,3 +1,5 @@
+use crate::util::str_split;
+
 #[aoc(day4, part1)]
 fn part1(input: &str) -> i32 {
     let mut valid_passports = 0;
@@ -39,9 +41,8 @@ fn part2(input: &str) -> i32 {
         let pairs = passport.split_ascii_whitespace();
 
         for pair in pairs {
-            let mut split = pair.split(':');
-            let key = split.next().unwrap();
-            let value = split.next().unwrap();
+            let (key, value): (String, String) = str_split(pair, ":").unwrap();
+            let key = key.as_str();
             match key {
                 "byr" => {
                     let year: i32 = value.parse().unwrap_or(-1);
