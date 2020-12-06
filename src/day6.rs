@@ -34,6 +34,30 @@ fn part1_fp(input: &str) -> usize {
         .sum()
 }
 
+#[aoc(day6, part1, bit)]
+fn part1_bit(input: &str) -> u32 {
+    let mut total_questions = 0;
+    let mut bits: u32 = 0;
+    for group in input.split("\n\n") {
+        for person in group.lines() {
+            for answer in person.chars() {
+                let ascii = answer as u128 - 97;
+                let bit = 1_u32 << ascii;
+                bits |= bit;
+            }
+        }
+        // get the hamming weight (count 1s in a binary number)
+        while bits > 0 {
+            if bits & 1 == 1 {
+                total_questions += 1;
+            }
+            bits >>= 1;
+        }
+        bits = 0;
+    }
+    total_questions
+}
+
 #[aoc(day6, part2)]
 fn part2(input: &str) -> usize {
     let mut total_questions = 0;
@@ -64,6 +88,7 @@ mod tests {
         let input = include_str!("../input/2020/day6.txt");
         assert_eq!(part1(input), 6504);
         assert_eq!(part1_fp(input), 6504);
+        assert_eq!(part1_bit(input), 6504);
     }
 
     #[test]
