@@ -3,17 +3,35 @@ use std::collections::{HashMap, HashSet};
 #[aoc(day6, part1)]
 fn part1(input: &str) -> usize {
     let mut total_questions = 0;
+    let mut questions = HashSet::new();
     for group in input.split("\n\n") {
-        let mut questions = HashSet::new();
         for person in group.lines() {
             for answer in person.chars() {
                 questions.insert(answer);
             }
         }
         total_questions += questions.len();
+        questions.clear();
     }
 
     total_questions
+}
+
+#[aoc(day6, part1, fp)]
+fn part1_fp(input: &str) -> usize {
+    input
+        .split("\n\n")
+        .map(|group| {
+            group
+                .lines()
+                .flat_map(str::chars)
+                .fold(HashSet::new(), |mut acc, char| {
+                    acc.insert(char);
+                    acc
+                })
+                .len()
+        })
+        .sum()
 }
 
 #[aoc(day6, part2)]
@@ -45,6 +63,7 @@ mod tests {
     fn verify_part1() {
         let input = include_str!("../input/2020/day6.txt");
         assert_eq!(part1(input), 6504);
+        assert_eq!(part1_fp(input), 6504);
     }
 
     #[test]
