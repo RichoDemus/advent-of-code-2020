@@ -18,21 +18,15 @@ fn part1(input: &str) -> usize {
 }
 
 fn can_contain_golden_bag_rec(bags: &HashMap<String, Vec<Content>>, current_bag: &str) -> bool {
-    let empty_vec = vec![];
-    let bags_inside = bags.get(current_bag).unwrap_or(&empty_vec);
-
-    if bags_inside.is_empty() {
-        return false;
+    match bags.get(current_bag) {
+        None => false,
+        Some(bags_inside) if bags_inside.is_empty() => false,
+        Some(bags_inside) if bags_inside.iter().any(|bag| bag.color == *"shiny gold") => true,
+        Some(bags_inside) => bags_inside
+            .iter()
+            .map(|bag| can_contain_golden_bag_rec(bags, &bag.color))
+            .any(|has_golden_bag| has_golden_bag),
     }
-
-    if bags_inside.iter().any(|bag| bag.color == *"shiny gold") {
-        return true;
-    }
-
-    bags_inside
-        .iter()
-        .map(|bag| can_contain_golden_bag_rec(bags, &bag.color))
-        .any(|has_golden_bag| has_golden_bag)
 }
 
 #[aoc(day7, part2)]
