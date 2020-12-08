@@ -43,21 +43,21 @@ fn part2(input: &str) -> i32 {
         .collect::<Vec<_>>();
 
     match part2_inner(&*code) {
-        Some(code) => code,
-        None => panic!("Not like this"),
+        Ok(code) => code,
+        Err(msg) => panic!("Not like this: {:?}", msg),
     }
 }
 
-fn part2_inner(code: &[(String, i32)]) -> Option<i32> {
+fn part2_inner(code: &[(String, i32)]) -> Result<i32, String> {
     let mutations = generate_mutations(code);
 
     for mutation in mutations {
         let exit_code = get_exit_code(&mutation);
-        if exit_code.is_some() {
-            return exit_code;
+        if let Ok(code) = exit_code {
+            return Ok(code);
         }
     }
-    None
+    Err(String::from("No solution found"))
 }
 
 fn generate_mutations(code: &[(String, i32)]) -> Vec<Vec<(String, i32)>> {
@@ -77,16 +77,19 @@ fn generate_mutations(code: &[(String, i32)]) -> Vec<Vec<(String, i32)>> {
     mutations
 }
 
-fn get_exit_code(code: &[(String, i32)]) -> Option<i32> {
+#[derive(Debug, Clone, Eq, PartialEq)]
+struct InfiniteLoopError;
+
+fn get_exit_code(code: &[(String, i32)]) -> Result<i32, InfiniteLoopError> {
     let mut visitied_instructions = HashSet::new();
     let mut instruction_pointer: usize = 0;
     let mut accumulator = 0;
     loop {
         if visitied_instructions.contains(&instruction_pointer) {
-            return None;
+            return Err(InfiniteLoopError);
         }
         let (instruction, value) = match code.get(instruction_pointer as usize) {
-            None => return Some(accumulator),
+            None => return Ok(accumulator),
             Some(v) => v,
         };
         visitied_instructions.insert(instruction_pointer);
@@ -144,7 +147,7 @@ mod tests {
         .map(|(s, i)| (String::from(s), i))
         .collect::<Vec<_>>();
 
-        assert_eq!(get_exit_code(&infinite_loop), None);
+        assert_eq!(get_exit_code(&infinite_loop), Err(InfiniteLoopError));
     }
 
     #[test]
@@ -164,7 +167,7 @@ mod tests {
         .map(|(s, i)| (String::from(s), i))
         .collect::<Vec<_>>();
 
-        assert_eq!(get_exit_code(&code), Some(8));
+        assert_eq!(get_exit_code(&code), Ok(8));
     }
 
     #[test]
@@ -195,14 +198,14 @@ mod tests {
             .map(|(s, i)| (String::from(s), i))
             .collect::<Vec<_>>();
 
-        assert_eq!(part2_inner(&input), Some(2));
+        assert_eq!(part2_inner(&input), Ok(2));
 
         let input = vec![("nop", 1), ("acc", 2), ("nop", 3), ("jmp", -1), ("jmp", -1)]
             .into_iter()
             .map(|(s, i)| (String::from(s), i))
             .collect::<Vec<_>>();
 
-        assert_eq!(part2_inner(&input), Some(2));
+        assert_eq!(part2_inner(&input), Ok(2));
     }
     #[test]
     fn test_part22() {
@@ -221,6 +224,6 @@ mod tests {
         .map(|(s, i)| (String::from(s), i))
         .collect::<Vec<_>>();
 
-        assert_eq!(part2_inner(&input), Some(8));
+        assert_eq!(part2_inner(&input), Ok(8));
     }
 }
