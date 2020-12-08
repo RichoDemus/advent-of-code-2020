@@ -5,7 +5,7 @@ use std::str::FromStr;
 /// Helper method to split and parse a string based on a delimiter
 /// example
 /// ```
-/// use advent_of_code_2020::util::str_split;
+/// # use advent_of_code_2020::util::str_split;
 ///
 /// let (left, right):(u32,String) = str_split("10::hello","::").unwrap();
 /// assert_eq!(left, 10);
@@ -30,6 +30,14 @@ where
     }
 }
 
+///
+/// Helper method to add a signed integer to a usize
+/// example
+/// ```
+/// # use advent_of_code_2020::util::add;
+/// assert_eq!(add(10_usize, -2_i32), Some(8));
+/// assert_eq!(add(10_usize, 2_i32), Some(12));
+/// ```
 #[allow(clippy::cast_sign_loss)]
 pub const fn add(u: usize, i: i32) -> Option<usize> {
     if i.is_negative() {
