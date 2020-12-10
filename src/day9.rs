@@ -18,7 +18,7 @@ fn find_first_outlier(input: &[usize], preamble_size: usize) -> usize {
             buffer.push_front(*xmas);
             buffer.truncate(preamble_size);
         } else {
-            if !check_sum(&buffer, xmas) {
+            if !check_sum(&buffer, *xmas) {
                 return *xmas;
             }
             buffer.push_front(*xmas);
@@ -31,9 +31,9 @@ fn find_first_outlier(input: &[usize], preamble_size: usize) -> usize {
     panic!()
 }
 
-fn check_sum(buffer: &VecDeque<usize>, xmas: &usize) -> bool {
+fn check_sum(buffer: &VecDeque<usize>, xmas: usize) -> bool {
     for buff in buffer {
-        if buff > xmas {
+        if buff > &xmas {
             // wont be able to find a sum when operands > sum
             continue;
         }
@@ -55,7 +55,7 @@ fn check_sum(buffer: &VecDeque<usize>, xmas: &usize) -> bool {
 
 #[aoc(day9, part2)]
 fn part2(input: &str) -> usize {
-    let xmas = 22477624;
+    let xmas = 22_477_624;
     let input = input
         .lines()
         .map(|line| line.parse().unwrap())
