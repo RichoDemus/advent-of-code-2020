@@ -99,8 +99,8 @@ struct PartTwoResponse {
     distance: i32,
     ship_x: i32,
     ship_y: i32,
-    waypoint_x:i32,
-    waypoint_y:i32,
+    waypoint_x: i32,
+    waypoint_y: i32,
 }
 
 fn part2_manhattan_distance(input: &str) -> PartTwoResponse {
@@ -266,8 +266,7 @@ N3
 F7
 R90";
 
-        let result =
-            part2_manhattan_distance(input);
+        let result = part2_manhattan_distance(input);
 
         assert_eq!(result.ship_x, 170);
         assert_eq!(result.ship_y, -38);
@@ -278,14 +277,12 @@ R90";
 
     #[test]
     fn test_rotate_waypoint_left() {
-        let result =
-            part2_manhattan_distance("L90");
+        let result = part2_manhattan_distance("L90");
 
         assert_eq!(result.waypoint_x, -1, "check waypoint x");
         assert_eq!(result.waypoint_y, -10, "check waypoint y");
 
-        let result =
-            part2_manhattan_distance("L90\nL90");
+        let result = part2_manhattan_distance("L90\nL90");
 
         assert_eq!(result.waypoint_x, -10, "check waypoint x");
         assert_eq!(result.waypoint_y, 1, "check waypoint y");
