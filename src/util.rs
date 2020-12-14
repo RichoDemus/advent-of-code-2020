@@ -22,8 +22,8 @@ where
 
     match (left, right) {
         (Some(left), Some(right)) => {
-            let left: L = left.parse().expect("couldn't unwrap left");
-            let right: R = right.parse().expect("couldn't unwrap right");
+            let left: L = left.trim().parse().expect("couldn't unwrap left");
+            let right: R = right.trim().parse().expect("couldn't unwrap right");
             Some((left, right))
         }
         _ => None,
