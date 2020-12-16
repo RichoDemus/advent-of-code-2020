@@ -72,7 +72,7 @@ fn part2_30000000th_number(input: &str) -> u32 {
     let mut last_spokens: HashMap<u32, u32, RandomState> = HashMap::new();
     let mut next_number = 0;
 
-    for turn in 1..30000000 as u32 {
+    for turn in 1..30_000_000 as u32 {
         let maybe_precomputed_number = starting_numbers.get((turn - 1) as usize);
         if let Some(precomp) = maybe_precomputed_number {
             let when_was_it_last_said = last_spokens.get(precomp).copied();
@@ -125,6 +125,12 @@ mod tests {
     fn verify_part1() {
         let input = include_str!("../input/2020/day15.txt");
         assert_eq!(part1_2020th_number(input), 610);
+    }
+
+    #[test]
+    fn verify_part2() {
+        let input = include_str!("../input/2020/day15.txt");
+        assert_eq!(part2_30000000th_number(input), 1407);
     }
 
     // #[test]
