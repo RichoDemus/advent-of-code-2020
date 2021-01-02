@@ -25,5 +25,6 @@ mod day7;
 mod day8;
 mod day9;
 pub mod util;
+mod day19_message_rules;
 
 aoc_lib! { year = 2020 }
